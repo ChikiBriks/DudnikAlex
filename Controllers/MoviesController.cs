@@ -48,7 +48,7 @@ namespace DudnikAlex.Controllers
         // GET: Movies/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Movie == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -141,9 +141,9 @@ namespace DudnikAlex.Controllers
         }
 
         // GET: Movies/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id, bool notUsed)
         {
-            if (id == null || _context.Movie == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -163,16 +163,8 @@ namespace DudnikAlex.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Movie == null)
-            {
-                return Problem("Entity set 'DudnikAlexContext.Movie'  is null.");
-            }
             var movie = await _context.Movie.FindAsync(id);
-            if (movie != null)
-            {
-                _context.Movie.Remove(movie);
-            }
-            
+            _context.Movie.Remove(movie);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
