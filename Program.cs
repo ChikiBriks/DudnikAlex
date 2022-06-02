@@ -1,4 +1,9 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using DudnikAlex.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<DudnikAlexContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DudnikAlexContext") ?? throw new InvalidOperationException("Connection string 'DudnikAlexContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
